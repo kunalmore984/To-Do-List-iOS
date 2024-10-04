@@ -12,9 +12,9 @@ import SwiftData
 struct To_Do_List_iOS_App: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ListContentView()
         }
-        .modelContainer(for: ListModel.self)
+        .modelContainer(for: ListViewModel.self)
     }
     
     init() {
