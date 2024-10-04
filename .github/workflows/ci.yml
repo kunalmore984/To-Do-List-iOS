@@ -1,0 +1,39 @@
+name: iOS CI
+
+on:
+  push:
+    branches:
+      - main # Run tests on pushes to the main branch
+  pull_request:
+    branches:
+      - main # Run tests on pull requests to the main branch
+
+jobs:
+  build:
+
+    runs-on: macos-latest
+
+    steps:
+      # Check out the code from your repository
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Set up Xcode
+      - name: Set up Xcode
+        uses: maxim-lobanov/setup-xcode@v2
+        with:
+          xcode-version: latest # You can specify a particular version here if needed
+
+      # Install dependencies (if you are using any package manager like CocoaPods or Swift Package Manager)
+      # Uncomment this section if you use CocoaPods
+      # - name: Install CocoaPods dependencies
+      #   run: pod install
+      
+      # Build and run tests
+      - name: Build and Test
+        run: |
+          xcodebuild clean build test \
+            -workspace YourProjectName.xcworkspace \ # Replace with your project or workspace
+            -scheme YourSchemeName \ # Replace with your scheme name
+            -destination 'platform=iOS Simulator,name=iPhone 14,OS=latest' \
+            CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
